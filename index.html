@@ -26,6 +26,11 @@
         <span id="hdr-rnc">RNC: ---</span>
       </div>
       <div class="header-badge">DGII Compatible</div>
+      <div class="header-user" id="header-user">
+        <span class="user-avatar" id="hdr-avatar">A</span>
+        <span class="user-name" id="hdr-username">admin</span>
+        <button class="btn-logout" onclick="doLogout()" title="Cerrar sesión">&#10148; Salir</button>
+      </div>
     </div>
   </header>
 
@@ -376,6 +381,7 @@
 
   <!-- SCRIPTS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/db.js"></script>
   <script src="js/state.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/clients.js"></script>

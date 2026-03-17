@@ -1,0 +1,153 @@
+/* ============================================
+   HYPERTECH SOLUTIONS
+   UI Components
+   ============================================ */
+
+/* --- CLIENT MINI CARDS --- */
+.client-card-mini {
+  background: var(--gray);
+  border-radius: 7px;
+  padding: 11px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.18s;
+}
+.client-card-mini:hover,
+.client-card-mini.selected {
+  border-color: var(--blue);
+  background: #E3F2FD;
+}
+.client-card-mini .name { font-weight: 700; font-size: 14px; color: var(--blue-dark); }
+.client-card-mini .info { font-size: 12px; color: var(--gray3); margin-top: 2px; }
+
+/* --- FORM SECTION DIVIDER --- */
+.form-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 18px 0;
+}
+.form-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue-dark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- NCF BADGE --- */
+.ncf-badge {
+  display: inline-block;
+  background: #E3F2FD;
+  color: var(--blue-dark);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  border: 1px solid #90CAF9;
+}
+
+/* --- QR CONTAINER --- */
+.qr-container {
+  display: inline-block;
+  padding: 8px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+}
+
+/* --- LOADING SPINNER --- */
+.spinner {
+  width: 24px; height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- HIGHLIGHT --- */
+mark { background: #FFF9C4; padding: 1px 4px; border-radius: 3px; color: inherit; }
+
+/* --- VERIFY SECTION --- */
+#verify-result .inv-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.verify-detail-block {
+  background: var(--gray);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.verify-detail-label { font-size: 11px; color: var(--gray3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family: var(--font-body); }
+.verify-detail-value { font-size: 15px; font-weight: 700; color: var(--black); }
+
+/* --- STATUS COLORS (inline) --- */
+.text-paid     { color: #2E7D32; }
+.text-pending  { color: #F57F17; }
+.text-cancelled{ color: #C62828; }
+.text-blue     { color: var(--blue); }
+.text-orange   { color: var(--orange); }
+
+/* --- READONLY FIELD --- */
+input[readonly] { background: var(--gray) !important; color: var(--blue-dark); font-weight: 700; cursor: default; }
+
+/* --- AVATAR INITIALS --- */
+.avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--blue-dark);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+.avatar.orange { background: var(--orange); }
+.avatar.yellow { background: var(--yellow); color: var(--black); }
+
+/* --- SECTION TOOLBAR --- */
+.section-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* --- DIVIDER LINE --- */
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 18px 0;
+}
+
+/* --- RESPONSIVE TABLE WRAPPER --- */
+.table-wrap { overflow-x: auto; }
+.table-wrap .data-table { min-width: 640px; }
+
+/* --- ACTION BTNS IN TABLE --- */
+.tbl-actions { display: flex; gap: 6px; }
+
+/* --- FOOTER --- */
+.app-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: var(--gray3);
+  font-family: var(--font-body);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
