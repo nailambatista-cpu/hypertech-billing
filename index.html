@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HYPERTECH SOLUTIONS - Sistema de Facturación Electrónica">
+  <title>HYPERTECH SOLUTIONS | Facturación Electrónica</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/invoice.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- APP HEADER -->
+  <header id="app-header">
+    <div class="header-left">
+      <div class="logo-title">HYPER<span class="logo-accent">TECH</span><span class="logo-dot"></span>SOLUTIONS</div>
+      <div class="logo-subtitle">Sistema de Facturación Electrónica</div>
+    </div>
+    <div class="header-right">
+      <div class="header-info" id="header-company-info">
+        <span id="hdr-company">HYPERTECH SOLUTIONS</span>
+        <span class="hdr-sep">|</span>
+        <span id="hdr-rnc">RNC: ---</span>
+      </div>
+      <div class="header-badge">DGII Compatible</div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="nav('dashboard')" data-panel="dashboard">
+      <span class="nav-icon">&#9783;</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="nav('new-invoice')" data-panel="new-invoice">
+      <span class="nav-icon">&#9998;</span> Nueva Factura
+    </div>
+    <div class="nav-item" onclick="nav('new-quote')" data-panel="new-quote">
+      <span class="nav-icon">&#9997;</span> Cotización
+    </div>
+    <div class="nav-section">Gestión</div>
+    <div class="nav-item" onclick="nav('history')" data-panel="history">
+      <span class="nav-icon">&#9783;</span> Historial
+    </div>
+    <div class="nav-item" onclick="nav('clients')" data-panel="clients">
+      <span class="nav-icon">&#9786;</span> Clientes
+    </div>
+    <div class="nav-section">Sistema</div>
+    <div class="nav-item" onclick="nav('verify')" data-panel="verify">
+      <span class="nav-icon">&#10003;</span> Verificar Factura
+    </div>
+    <div class="nav-item" onclick="nav('settings')" data-panel="settings">
+      <span class="nav-icon">&#9881;</span> Configuración
+    </div>
+    <div class="sidebar-footer">
+      <div class="sf-version">v2.0.0 &nbsp;|&nbsp; DGII-RD</div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+
+    <!-- DASHBOARD -->
+    <div id="panel-dashboard" class="panel active">
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <div class="page-actions">
+          <button class="btn btn-primary" onclick="nav('new-invoice')">+ Nueva Factura</button>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card stat-blue">
+          <div class="stat-label">Facturas Totales</div>
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-sub">Todos los tiempos</div>
+        </div>
+        <div class="stat-card stat-orange">
+          <div class="stat-label">Este Mes</div>
+          <div class="stat-value" id="stat-month">0</div>
+          <div class="stat-sub">Facturas emitidas</div>
+        </div>
+        <div class="stat-card stat-yellow">
+          <div class="stat-label">Esta Semana</div>
+          <div class="stat-value" id="stat-week">0</div>
+          <div class="stat-sub">Facturas emitidas</div>
+        </div>
+        <div class="stat-card stat-dark">
+          <div class="stat-label">Ingresos Mes</div>
+          <div class="stat-value" id="stat-revenue">RD$0</div>
+          <div class="stat-sub">Total facturado</div>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-title">Facturas Recientes</div>
+          <div id="recent-invoices"><div class="empty-state"><div class="empty-icon">&#128196;</div>No hay facturas aún</div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Clientes Frecuentes</div>
+          <div id="recent-clients"><div class="empty-state"><div class="empty-icon">&#128100;</div>No hay clientes aún</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUEVA FACTURA -->
+    <div id="panel-new-invoice" class="panel">
+      <div class="page-header">
+        <h1 class="page-title">Nueva Factura</h1>
+        <div class="page-actions">
+          <button class="btn btn-ghost" onclick="clearInvoiceForm()">Limpiar</button>
+          <button class="btn btn-orange" onclick="saveAndPreview()">Guardar y Ver</button>
+          <button class="btn btn-primary" onclick="saveInvoice()">Guardar Factura</button>
+        </div>
+      </div>
+      <div id="invoice-form-container">
+        <!-- loaded by invoice.js -->
+      </div>
+    </div>
+
+    <!-- COTIZACIÓN -->
+    <div id="panel-new-quote" class="panel">
+      <div class="page-header">
+        <h1 class="page-title">Nueva Cotización</h1>
+        <div class="page-actions">
+          <button class="btn btn-ghost" onclick="clearQuoteForm()">Limpiar</button>
+          <button class="btn btn-orange" onclick="convertToInvoice()">Convertir a Factura</button>
+          <button class="btn btn-primary" onclick="saveQuote()">Guardar Cotización</button>
+        </div>
+      </div>
+      <div id="quote-form-container">
+        <!-- loaded by quote.js -->
+      </div>
+    </div>
+
+    <!-- HISTORIAL -->
+    <div id="panel-history" class="panel">
+      <div class="page-header">
+        <h1 class="page-title">Historial de Facturación</h1>
+      </div>
+      <div class="card">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchHistTab('inv-tab', this)">Facturas</button>
+          <button class="tab-btn" onclick="switchHistTab('quo-tab', this)">Cotizaciones</button>
+        </div>
+        <div id="inv-tab" class="tab-pane active">
+          <div class="filter-row">
+            <div class="form-group"><label class="form-label">Buscar</label><input class="form-control" id="search-inv" placeholder="Nombre, # factura, RNC..." oninput="filterHistory()"></div>
+            <div class="form-group"><label class="form-label">Desde</label><input class="form-control" id="filter-from" type="date" onchange="filterHistory()"></div>
+            <div class="form-group"><label class="form-label">Hasta</label><input class="form-control" id="filter-to" type="date" onchange="filterHistory()"></div>
+            <div class="form-group"><label class="form-label">Estado</label>
+              <select class="form-control" id="filter-status" onchange="filterHistory()">
+                <option value="">Todos</option>
+                <option value="paid">Pagado</option>
+                <option value="pending">Pendiente</option>
+                <option value="cancelled">Cancelado</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Período</label>
+              <select class="form-control" id="filter-period" onchange="filterByPeriod()">
+                <option value="">Todos</option>
+                <option value="today">Hoy</option>
+                <option value="week">Esta semana</option>
+                <option value="month">Este mes</option>
+              </select>
+            </div>
+            <button class="btn btn-ghost btn-sm filter-clear" onclick="clearFilters()">&#10005; Limpiar</button>
+          </div>
+          <div id="history-table-container"></div>
+        </div>
+        <div id="quo-tab" class="tab-pane">
+          <div id="quotes-table-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div id="panel-clients" class="panel">
+      <div class="page-header">
+        <h1 class="page-title">Librería de Clientes</h1>
+        <div class="page-actions">
+          <input class="form-control" id="client-search" placeholder="Buscar cliente..." oninput="filterClients()" style="width:240px">
+          <button class="btn btn-primary" onclick="showClientModal()">+ Agregar Cliente</button>
+        </div>
+      </div>
+      <div class="card">
+        <div id="clients-list"></div>
+      </div>
+    </div>
+
+    <!-- VERIFICAR FACTURA (DGI) -->
+    <div id="panel-verify" class="panel">
+      <div class="page-header">
+        <h1 class="page-title">Verificar Factura</h1>
+      </div>
+      <div class="verify-grid">
+        <div class="card">
+          <div class="card-title">&#128269; Buscar por Número</div>
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="form-label">Número de Factura</label>
+            <input class="form-control" id="verify-number" placeholder="INV-01000">
+          </div>
+          <button class="btn btn-primary" onclick="verifyInvoice()">Verificar</button>
+          <div id="verify-result" style="margin-top:16px"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">&#128247; Escanear QR</div>
+          <div class="qr-scan-info">
+            <p>Esta pantalla muestra los datos fiscales de una factura cuando se escanea el código QR.</p>
+            <p style="margin-top:8px">El QR contiene la URL de verificación en formato:<br>
+            <code style="background:#f5f5f5;padding:4px 8px;border-radius:4px;font-size:12px">
+              https://[tu-dominio]/verify.html?inv=INV-XXXXX
+            </code></p>
+            <p style="margin-top:8px">Compatible con el formato de verificación electrónica de la <strong>DGII (Dirección General de Impuestos Internos)</strong> de República Dominicana.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIGURACIÓN -->
+    <div id="panel-settings" class="panel">
+      <div class="page-header">
+        <h1 class="page-title">Configuración</h1>
+        <div class="page-actions">
+          <button class="btn btn-primary" onclick="saveSettings()">Guardar Cambios</button>
+        </div>
+      </div>
+      <div class="settings-grid">
+        <div class="card">
+          <div class="card-title">Datos de la Empresa</div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="form-group"><label class="form-label">Nombre de la Empresa *</label><input class="form-control" id="cfg-name" value="HYPERTECH SOLUTIONS"></div>
+            <div class="form-group"><label class="form-label">RNC de la Empresa *</label><input class="form-control" id="cfg-rnc" placeholder="000-000000-0"></div>
+          </div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="cfg-phone" placeholder="+1 (809) 000-0000"></div>
+            <div class="form-group"><label class="form-label">Correo Electrónico</label><input class="form-control" id="cfg-email" placeholder="info@hypertech.com" type="email"></div>
+          </div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="form-group"><label class="form-label">Dirección</label><input class="form-control" id="cfg-address" placeholder="Calle, No., Sector"></div>
+            <div class="form-group"><label class="form-label">Ciudad / País</label><input class="form-control" id="cfg-city" placeholder="Santiago, República Dominicana"></div>
+          </div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="form-group"><label class="form-label">Sitio Web</label><input class="form-control" id="cfg-website" placeholder="www.hypertech.com"></div>
+            <div class="form-group"><label class="form-label">Moneda</label>
+              <select class="form-control" id="cfg-currency">
+                <option value="RD$">RD$ (Peso Dominicano)</option>
+                <option value="$">$ (USD)</option>
+                <option value="€">€ (Euro)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="form-label">NCF Prefijo (Ej: B01, B02, B14)</label>
+            <input class="form-control" id="cfg-ncf" placeholder="B01" style="max-width:120px">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Términos y Condiciones</div>
+          <div class="form-group">
+            <label class="form-label">Texto por Defecto en Facturas</label>
+            <textarea class="form-control" id="cfg-terms" rows="6" placeholder="Ej: Pago a 30 días. Sujeto a penalidades por mora..."></textarea>
+          </div>
+          <div class="card-title" style="margin-top:20px">Información SMTP (Correo)</div>
+          <div class="smtp-note">
+            <strong>Nota:</strong> Para envío automático de correos, configure estas variables en el servidor o use EmailJS con su API Key.
+          </div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="form-group"><label class="form-label">EmailJS Service ID</label><input class="form-control" id="cfg-ejs-service" placeholder="service_xxxxxxx"></div>
+            <div class="form-group"><label class="form-label">EmailJS Template ID</label><input class="form-control" id="cfg-ejs-template" placeholder="template_xxxxxxx"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">EmailJS Public Key</label>
+            <input class="form-control" id="cfg-ejs-key" placeholder="xxxxxxxxxxxxxxxxxxxx">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: CLIENTE -->
+  <div class="modal-overlay" id="client-modal">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h3>DATOS DEL CLIENTE</h3>
+        <button class="modal-close" onclick="closeModal('client-modal')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-client-id">
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="form-group"><label class="form-label">Nombre Completo *</label><input class="form-control" id="cl-name" placeholder="Nombre / Razón Social"></div>
+          <div class="form-group"><label class="form-label">RNC / Cédula</label><input class="form-control" id="cl-rnc" placeholder="000-0000000-0"></div>
+        </div>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="form-group"><label class="form-label">Correo Electrónico</label><input class="form-control" id="cl-email" type="email" placeholder="correo@email.com"></div>
+          <div class="form-group"><label class="form-label">Teléfono</label><input class="form-control" id="cl-phone" placeholder="+1 (809) 000-0000"></div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="form-label">Dirección</label>
+          <input class="form-control" id="cl-address" placeholder="Dirección completa">
+        </div>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="form-group"><label class="form-label">Ciudad</label><input class="form-control" id="cl-city" placeholder="Ciudad"></div>
+          <div class="form-group"><label class="form-label">Tipo</label>
+            <select class="form-control" id="cl-type">
+              <option value="individual">Persona Física</option>
+              <option value="empresa">Empresa / Jurídica</option>
+              <option value="gobierno">Entidad Gubernamental</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:20px">
+          <label class="form-label">Notas Internas</label>
+          <textarea class="form-control" id="cl-notes" rows="2" placeholder="Notas sobre el cliente..."></textarea>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-primary" onclick="saveClient()">Guardar Cliente</button>
+          <button class="btn btn-ghost" onclick="closeModal('client-modal')">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VER / IMPRIMIR FACTURA -->
+  <div class="modal-overlay" id="invoice-modal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="modal-inv-title">FACTURA</h3>
+        <button class="modal-close" onclick="closeModal('invoice-modal')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-toolbar">
+          <button class="btn btn-primary btn-sm" onclick="printCurrentModal()">Imprimir</button>
+          <button class="btn btn-orange btn-sm" onclick="sendEmailModal()">Enviar Email</button>
+          <button class="btn btn-ghost btn-sm" onclick="downloadPDF()">Descargar PDF</button>
+          <button class="btn btn-ghost btn-sm" onclick="closeModal('invoice-modal')">Cerrar</button>
+        </div>
+        <div id="invoice-modal-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EMAIL -->
+  <div class="modal-overlay" id="email-modal">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>ENVIAR POR EMAIL</h3>
+        <button class="modal-close" onclick="closeModal('email-modal')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="form-label">Para</label>
+          <input class="form-control" id="email-to" type="email" placeholder="cliente@email.com">
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="form-label">Asunto</label>
+          <input class="form-control" id="email-subject">
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label class="form-label">Mensaje</label>
+          <textarea class="form-control" id="email-body" rows="6"></textarea>
+        </div>
+        <div class="email-note">
+          <strong>&#9432;</strong> Se abrirá su cliente de correo con los datos pre-llenados. Para envío automático, configure EmailJS en Ajustes.
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button class="btn btn-orange" onclick="doSendEmail()">Abrir Correo</button>
+          <button class="btn btn-ghost" onclick="closeModal('email-modal')">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/clients.js"></script>
+  <script src="js/invoice.js"></script>
+  <script src="js/quote.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
